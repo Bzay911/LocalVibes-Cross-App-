@@ -3,9 +3,8 @@ import { Link } from 'expo-router'
 import { AuthForm } from '@/components/AuthForm'
 import { useContext } from 'react'
 import { AuthContext } from '@/contexts/AuthContext'
-import{createUserWithEmailAndPassword, Auth} from '@firebase/auth'
-import {router, useRouter} from 'expo-router'
-import { useEffect } from 'react'
+import{createUserWithEmailAndPassword, onAuthStateChanged} from '@firebase/auth'
+import { useRouter} from 'expo-router'
 
 export default function Signup(props: any){
     const auth = useContext(AuthContext)
@@ -23,11 +22,17 @@ export default function Signup(props: any){
 
     }
 
-    useEffect(() => {
-        if(auth.currentUser){
-            router.replace("/home")
+   onAuthStateChanged( auth, (user) => {
+        if(user){
+            // user is authenticated
+            // redirect user to home
+            router.replace('/home')
         }
-    },[])
+        else{
+            // user is not authenticated
+        }
+   })
+
     return (
         <View>
             <AuthForm title="Sign up for an account" actionText="Sign Up" action={createAccount}/>
