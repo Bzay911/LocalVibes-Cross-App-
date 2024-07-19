@@ -43,7 +43,7 @@ export function AuthForm( props: any ){
                 value={password} 
                 onChangeText={(text) => setPassword(text)}/>  
             <Pressable 
-                onPress={() => props.action(email, password)} 
+                onPress={() => props.action( email, password )} 
                 style={ (validEmail && validPassword) ? styles.button : styles.buttonDisabled}
                 disabled= {(validEmail && validPassword) ? false : true}>
                 <Text style = {styles.buttonText}>{props.actionText}</Text>
