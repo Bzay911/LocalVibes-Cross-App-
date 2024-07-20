@@ -2,7 +2,7 @@ import {Text, View, StyleSheet, Pressable} from 'react-native'
 import { AuthContext } from '@/contexts/AuthContext'
 import { useContext, useEffect } from 'react'
 import {signOut} from '@firebase/auth'
-import { useRouter } from 'expo-router'
+import { useRouter, Link } from 'expo-router'
 
 export default function Home(props: any){
     const auth = useContext(AuthContext)
@@ -26,10 +26,37 @@ export default function Home(props: any){
 
     return(
         <View>
-            <Text>Home</Text>  
+
+            {/* Navigate user to home screen */}
+            <Link href="/main">
+            <Text style ={styles.links}>Home</Text>  
+            </Link>
+
+            {/* Navigate user to events screen */}
+            <Link href="/events">
+            <Text style ={styles.links}>Events</Text>  
+            </Link>
+
+            {/* Navigate user to community screen */}
+            <Link href="/community">
+            <Text style ={styles.links}>Community</Text>  
+            </Link>
+
+            {/* Navigate user to profile screen */}
+            <Link href="/profile">
+            <Text style ={styles.links}>Profile</Text>  
+            </Link>
+
             <Pressable onPress={() => SignOutUser()}>
-                <Text>Sign Out</Text>
+                <Text style ={styles.links}>Sign Out</Text>
             </Pressable>
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    links:{
+        fontWeight: "bold",
+        fontSize: 28
+    }
+})

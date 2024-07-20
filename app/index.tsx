@@ -34,10 +34,10 @@ export default function Signup(props: any){
    })
 
     return (
-        <View>
-            <AuthForm title="Sign up for an account" actionText="Sign Up" action={createAccount}/>
+        <View style ={styles.backgroundColor}>
+            <AuthForm title="New to Local Vibes?" semiTitle= "Sign up and enjoy locally" actionText="Sign Up" action={createAccount}/>
             <View style= {styles.container}>
-                <Text>Already have an account?</Text>
+                <Text style = {styles.textColor}>Already have an account?</Text>
                 <Link href="/login">
                 <Text style={styles.link}>Go to Login</Text>
                 </Link>
@@ -52,10 +52,21 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       justifyContent: "center",
       marginVertical: 15,
+      
+    },
+
+    backgroundColor: {
+        backgroundColor: "#050608",
+        flex: 1
+    },
+
+    textColor:{
+        color: "#FFFFFF",
     },
 
     link:{
-        color: "#b8111e",
-        marginLeft: 5,
+        color: "#FFFFFF",
+        marginLeft: 15,
+        fontWeight: "bold",
     }
   });

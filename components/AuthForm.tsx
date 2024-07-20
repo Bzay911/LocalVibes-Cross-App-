@@ -31,12 +31,13 @@ export function AuthForm( props: any ){
     return(
         <View style = {styles.container}>
           <Text style={styles.title}>{props.title}</Text>
-            <Text>Email</Text>
+          <Text style={styles.semiTitle}>{props.semiTitle}</Text>
+            <Text style={styles.inputHeadertxt}>Email</Text>
             <TextInput 
                 style={styles.input} 
                 value={email} 
                 onChangeText={(text) => setEmail(text)}/>
-            <Text>Password</Text>
+            <Text style= {styles.inputHeadertxt}>Password</Text>
             <TextInput 
                 secureTextEntry= {true} 
                 style={styles.input} 
@@ -54,15 +55,29 @@ export function AuthForm( props: any ){
 }
 const styles = StyleSheet.create({
     title:{
+        fontSize:32,
+        fontWeight:"bold",
+        textAlign: "center",
+        marginBottom: 10,
+        color:"#FFFFFF"
+    },
+    semiTitle:{
         fontSize:18,
         textAlign: "center",
+        marginBottom:20,
+        color:"#FFFFFF"
     },
+
+    inputHeadertxt:{
+        marginBottom: 10,
+        color: "#FFFFFF"
+    },
+
     container: {
         marginHorizontal: 20,
         marginTop: 100,
         padding: 20,
-        backgroundColor: "#bbbbbb",
-        borderRadius: 10,
+        backgroundColor: "#050608",
     },
     input: {
         borderStyle: "solid",
@@ -74,17 +89,23 @@ const styles = StyleSheet.create({
         borderRadius: 6,
     },
     button: {
-        backgroundColor: "#333333",
+        backgroundColor: "#D6578C",
         borderRadius: 4,
+        marginTop: 10
     },
     buttonText: {
         color: "#efefef",
         textAlign: "center",
         padding: 8,
+        fontSize:20,
+        fontWeight: "bold",
+        height: 50,
     },
+
     buttonDisabled: {
         backgroundColor: "#888888",
         borderRadius: 4,
+        marginTop: 10
     },
     buttonTextDisabled: {
         color: "#666666",

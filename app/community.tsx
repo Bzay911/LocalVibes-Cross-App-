@@ -1,17 +1,21 @@
 import { View, Text, StyleSheet } from 'react-native';
+import UserPost from '../components/userPost';
 
-export default function Tab() {
+export default function Community() {
   return (
     <View style={styles.container}>
-      <Text>this is commniavpage</Text>
+      <UserPost />
+      <UserPost />
+      <UserPost />
     </View>
   );
+
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
+  container:{
+      paddingBottom:10,
+      margin: 10,
+      gap:25
+  }
+})
