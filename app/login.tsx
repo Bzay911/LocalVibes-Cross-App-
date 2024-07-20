@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, StatusBar } from 'react-native'
+import { View, Text, StyleSheet, StatusBar, Dimensions } from 'react-native'
 import { Link } from 'expo-router'
 import { AuthForm } from '@/components/AuthForm'
 import { signInWithEmailAndPassword } from '@firebase/auth'
@@ -7,6 +7,8 @@ import { useContext, useState } from 'react'
 import { useRouter } from 'expo-router'
 import { ErrorMessage } from '@/components/ErrorMessage'
 import { Image } from 'expo-image'
+
+const {width} = Dimensions.get('window')
 
 export default function Login(props: any){
     const auth = useContext( AuthContext )
@@ -27,11 +29,11 @@ export default function Login(props: any){
 
     return (
         <View style = {styles.backgroundColor}>
+            <View style={styles.loginView}>
+
               <Image 
             style ={styles.image}
              source={require('../assets/images/loginImage.png')} 
-
-            // source={"https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"}
             contentFit="cover"
             />
 
@@ -44,6 +46,7 @@ export default function Login(props: any){
             </View>
             <ErrorMessage error = {error} />
         </View>
+            </View>
     )
 }
 
@@ -51,8 +54,12 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: "row",
         justifyContent: "center",
-        marginVertical: 15
+        // marginVertical: 15
     }, 
+
+    loginView:{
+
+    },
 
     backgroundColor: {
         backgroundColor: "#050608",
@@ -70,9 +77,9 @@ const styles = StyleSheet.create({
         fontWeight:"bold"
     },
     image: {
-        width: 370,  
-        height: 150, 
-        marginRight: 10,
+        width: width * 1,  
+        height: width * 0.43, 
+        marginTop: 20
         
       },
 })
