@@ -20,10 +20,11 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: 'column',
         padding: 5,
+        alignItems:"center"
       },
 
       image: {
-        width: 100,  
+        width: 105,  
         height: 100, 
         marginRight: 10,
         borderRadius:5,
@@ -31,6 +32,6 @@ const styles = StyleSheet.create({
         borderWidth: 1
       },
       text:{
-        color:"#FFFFFF"
+        color:"#FFFFFF",
       }
 })

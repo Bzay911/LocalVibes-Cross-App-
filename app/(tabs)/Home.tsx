@@ -43,7 +43,8 @@ export default function Main(props: any){
 
 const styles = StyleSheet.create({
     container:{
-        backgroundColor:"#050608"
+        backgroundColor:"#050608",
+        flex:1
     },
     image: {
         width: width * 1,  
@@ -65,7 +66,8 @@ const styles = StyleSheet.create({
       welcomeText:{
         color:"#FF64A5",
         fontSize: 16,
-        marginBottom: 10,
+        margin:12
+
       },
       viewText:{
         color: "#FF64A5",
@@ -78,7 +80,7 @@ const styles = StyleSheet.create({
       },
       organiserTab:{
         flexDirection: "row",
-        marginRight: 15 // not working
+        margin:5
       }
     
 })

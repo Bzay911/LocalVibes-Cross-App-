@@ -8,7 +8,8 @@ import { useRouter } from 'expo-router'
 import { ErrorMessage } from '@/components/ErrorMessage'
 import { Image } from 'expo-image'
 
-const {width} = Dimensions.get('window')
+const win = Dimensions.get('window')
+const ratio = win.width/541; //541 is actual image width
 
 export default function Login(props: any){
     const auth = useContext( AuthContext )
@@ -20,7 +21,7 @@ export default function Login(props: any){
     const LogIn = ( email:string, password:string ) => {
         signInWithEmailAndPassword( auth, email, password )
         .then((userCredential) => {
-            router.replace('/home')
+            router.replace('/Home')
         })
         .catch(( error) => {
             setError( error.code )
@@ -54,6 +55,7 @@ const styles = StyleSheet.create({
     container: {
         flexDirection: "row",
         justifyContent: "center",
+        gap:5
         // marginVertical: 15
     }, 
 
@@ -77,9 +79,9 @@ const styles = StyleSheet.create({
         fontWeight:"bold"
     },
     image: {
-        width: width * 1,  
-        height: width * 0.43, 
-        marginTop: 20
+        width: win.width,
+        height: 250 * ratio,
+        marginTop:20
         
       },
 })

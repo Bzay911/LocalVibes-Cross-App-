@@ -4,7 +4,7 @@ import { Link } from "expo-router";
 export default function Events(props: any){
 
     return(
-        <View >
+        <View style = {styles.tabContainer}>
           <Link href="/savedEvents">
           <Text style ={styles.links}>Saved Events</Text>
           </Link> 
@@ -19,6 +19,15 @@ export default function Events(props: any){
 const styles = StyleSheet.create({
     links:{
         fontWeight: "bold",
-        fontSize: 28
-    }
+        fontSize: 18,
+        color:"#FFFFFF"
+    },
+    tabContainer:{
+        flexDirection:"row",
+        gap:120,
+        backgroundColor:"#050608",
+        flex:1,
+        padding:15
+        
+    },
 })

@@ -2,11 +2,34 @@ import { Pressable, View, Text, StyleSheet}from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import UpcomingEvents from "@/components/upcomingEvents";
 import { useState } from "react";
+import { AuthContext } from '@/contexts/AuthContext'
+import { useContext, useEffect } from 'react'
+import {signOut} from '@firebase/auth'
+import { useRouter, Link } from 'expo-router'
 
 export default function Profile(props: any){
 
+    const auth = useContext(AuthContext)
+    const router = useRouter()
+
     const [showTickets, setShowTickets] = useState(false)
     const [showFollowing, setShowFollowing] = useState(false)
+
+    useEffect(() => {
+        if (auth){
+            console.log(auth.currentUser)
+        }
+    })
+
+    const SignOutUser = () => {
+        signOut( auth )
+        .then(() => {
+            router.replace('/')
+        })
+        .catch((error) => {
+            console.log(error.code, error.message)
+        })
+    }
    
     // Function to handle press of show tickets
     const handleShowTickets = () => {
@@ -47,7 +70,15 @@ export default function Profile(props: any){
             <UpcomingEvents />
             <UpcomingEvents />
 
+            <View style={styles.signOut}>
+
+            <Pressable onPress={() => SignOutUser()}>
+                <Text style={styles.signOutTxt}>Sign Out</Text>
+            </Pressable>
+            </View>
+
         </View>
+        
     )
 }
 
@@ -87,6 +118,19 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 20,
       },
+      signOut:{
+        alignItems:"center",
+        justifyContent:"center",
+        backgroundColor: "#FF64A5",
+        padding:15,
+        marginTop:20,
+        borderRadius:7
+      },
+      signOutTxt: {
+        color:"#FFFFFF",
+        fontWeight:"bold",
+        fontSize:18
+      }
     
 
 })

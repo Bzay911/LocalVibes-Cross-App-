@@ -1,5 +1,5 @@
 import { View, Text, StyleSheet } from 'react-native';
-import UserPost from '../components/userPost';
+import UserPost from '@/components/userPost';
 
 export default function Community() {
   return (
@@ -14,8 +14,10 @@ export default function Community() {
 
 const styles = StyleSheet.create({
   container:{
-      paddingBottom:10,
-      margin: 10,
-      gap:25
-  }
+      padding:10,
+      gap:25,
+      backgroundColor:"#050608",
+      flex:1,
+  },
+  
 })

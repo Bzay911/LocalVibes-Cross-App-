@@ -52,6 +52,8 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       justifyContent: "center",
       marginVertical: 15,
+      gap:5
+
       
     },
 
