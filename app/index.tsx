@@ -14,7 +14,7 @@ export default function Signup(props: any){
         createUserWithEmailAndPassword( auth, email, password)
         .then((userCredential) => {
             console.log(userCredential.user)
-            router.replace("/home")
+            router.replace("/login")
         })
         .catch((error) => {
             console.log(error.code, error.message)
@@ -26,7 +26,7 @@ export default function Signup(props: any){
         if(user){
             // user is authenticated
             // redirect user to home
-            router.replace('/home')
+            router.replace('/login')
         }
         else{
             // user is not authenticated
