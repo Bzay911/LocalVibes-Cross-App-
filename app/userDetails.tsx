@@ -1,7 +1,7 @@
 import { Pressable, View, Text, StyleSheet, TextInput} from "react-native";
 import { useRouter } from 'expo-router'
 import { DbContext } from "@/contexts/DbContext";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import {collection, addDoc} from 'firebase/firestore'
 import { AuthContext } from "@/contexts/AuthContext";
 
@@ -9,12 +9,15 @@ export default function UserDetails(props: any){
     const auth = useContext(AuthContext)
     const router = useRouter()
     const db = useContext(DbContext)
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
+    const [address, setAddress] = useState('')
 
     const addData = async () => {
         const data ={
-            firstname : "Alex",
-            lastname: "Patrick",
-            address: "Homebush"
+           firstName,
+           lastName,
+           address
         }
 
         const path = `users/ ${ auth.currentUser.uid}/items`
@@ -29,13 +32,17 @@ export default function UserDetails(props: any){
             <Text style= {styles.titleText}>Enter User Details</Text>
 
             <Text style= {styles.titleText}>First name</Text>
-            <TextInput style={styles.input}/>
+            <TextInput 
+            style={styles.input}
+            onChange={newFname => setFirstName(newFname.nativeEvent.text)}/>
 
             <Text style= {styles.titleText}>Last name</Text>
-            <TextInput style={styles.input}/>
+            <TextInput style={styles.input}
+            onChange={newLname => setLastName(newLname.nativeEvent.text)}/>
 
             <Text style= {styles.titleText}>Address</Text>
-            <TextInput style={styles.input}/>
+            <TextInput style={styles.input}
+            onChange={newadd => setAddress(newadd.nativeEvent.text)}/>
 
             <Pressable 
             style={styles.button}

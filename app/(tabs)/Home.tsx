@@ -2,6 +2,7 @@ import {Text, View, StyleSheet, Pressable, Dimensions} from 'react-native'
 import {Image} from 'expo-image'
 import UpcomingEvents from '@/components/upcomingEvents'
 import Suggestions from '@/components/suggestions'
+import { DbContext } from '@/contexts/DbContext'
 
 const {width} = Dimensions.get('window')
 
