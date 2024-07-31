@@ -4,6 +4,8 @@ import { firebaseConfig } from '@/Config/config';
 import {initializeApp } from '@firebase/app'
 import { getAuth } from '@firebase/auth'
 import { AuthContext } from '@/contexts/AuthContext';
+import { DbContext } from '@/contexts/DbContext';
+import {getFirestore} from '@firebase/firestore'
 
 
 export default function RootLayout() {
@@ -14,8 +16,14 @@ export default function RootLayout() {
   // initialize firebase auth
   const FBauth = getAuth(FBapp)
 
+  // initialize firebase firestore
+  const FBdb = getFirestore (FBapp)
+
+
+
   return (
     <AuthContext.Provider value={FBauth}>
+      <DbContext.Provider value={FBdb}>
    <SafeAreaView style = {styles.container}>
 
       <Stack>
@@ -27,6 +35,7 @@ export default function RootLayout() {
       {/* <Stack.Screen name="(tabs)" options={{ headerShown: false }} /> */}
     </Stack>
    </SafeAreaView>
+   </DbContext.Provider>
     </AuthContext.Provider>
   );
 }
