@@ -5,10 +5,6 @@ export default function Events(props: any){
 
     return(
         <View style = {styles.tabContainer}>
-          <Link href="/savedEvents">
-          <Text style ={styles.links}>Saved Events</Text>
-          </Link> 
-
           <Link href="/upcoming">
           <Text style ={styles.links}>Upcoming Events</Text>
           </Link> 
@@ -18,7 +14,7 @@ export default function Events(props: any){
 
 const styles = StyleSheet.create({
     links:{
-        fontWeight: "bold",
+        fontWeight:"500",
         fontSize: 18,
         color:"#FFFFFF"
     },

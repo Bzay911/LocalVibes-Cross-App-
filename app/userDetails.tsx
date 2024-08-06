@@ -21,6 +21,8 @@ export default function UserDetails(props: any){
         }
 
         const path = `users/ ${ auth.currentUser.uid}/items`
+        console.log(path)
+
         const docRef = await addDoc(collection(db, path), data)
         console.log(docRef.id)
 

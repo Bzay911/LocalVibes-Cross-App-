@@ -1,14 +1,19 @@
-import {Text, View, StyleSheet, Pressable, Dimensions} from 'react-native'
+import {Text, View, StyleSheet, Pressable, Dimensions,ScrollView} from 'react-native'
 import {Image} from 'expo-image'
 import UpcomingEvents from '@/components/upcomingEvents'
 import Suggestions from '@/components/suggestions'
-import { DbContext } from '@/contexts/DbContext'
+import { AuthContext } from '@/contexts/AuthContext'
+import { useContext } from 'react'
 
 const {width} = Dimensions.get('window')
 
 export default function Main(props: any){
-   
+  const auth = useContext( AuthContext )
+  // console.log(auth.uid)
     return(
+      <ScrollView contentContainerStyle = {styles.scrollContainer}>
+
+      
         <View style={styles.container}>
             <Text style={styles.welcomeText}>Hi John,</Text>
 
@@ -39,6 +44,7 @@ export default function Main(props: any){
         </View>
 
         </View>
+        </ScrollView>
     )
 }
 
@@ -48,12 +54,13 @@ const styles = StyleSheet.create({
         flex:1
     },
     image: {
-        width: width * 1,  
+        width: width,  
         height: width * 0.7 * 0.75, 
         marginRight: 2,
         borderRadius:5,
         borderColor: "#FFFFFF",
-        borderWidth: 1
+        borderWidth: 1, 
+        marginBottom:12
       },
 
       mainTexts:{
@@ -82,6 +89,11 @@ const styles = StyleSheet.create({
       organiserTab:{
         flexDirection: "row",
         margin:5
-      }
+      },
+      scrollContainer: {
+        flexGrow: 1,
+        backgroundColor: "#050608",
+        paddingBottom: 20
+      },
     
 })

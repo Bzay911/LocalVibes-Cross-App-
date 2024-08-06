@@ -14,20 +14,23 @@ const ratio = win.width/541; //541 is actual image width
 export default function Login(props: any){
     const auth = useContext( AuthContext )
     const router = useRouter()
-    const [ error, setError ] = useState('')
-
+    const [error, setError] = useState('')
+    const[isLoggedIn, setIsLoggedIn] = useState(false)
 
 
     const LogIn = ( email:string, password:string ) => {
         signInWithEmailAndPassword( auth, email, password )
         .then((userCredential) => {
-            // router.replace('/Home')
-            router.replace('/userDetails')
+            router.replace('/Home')
+            // router.replace('/userDetails')
         })
         .catch(( error) => {
             setError( error.code )
         })
+        setIsLoggedIn(true)
     }
+
+    
 
     return (
         <View style = {styles.backgroundColor}>

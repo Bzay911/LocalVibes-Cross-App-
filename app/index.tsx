@@ -13,7 +13,7 @@ export default function Signup(props: any){
     const createAccount = (email: string, password: string) => {
         createUserWithEmailAndPassword( auth, email, password)
         .then((userCredential) => {
-            console.log(userCredential.user)
+            // console.log(userCredential.user)
             router.replace("/login")
         })
         .catch((error) => {
@@ -25,7 +25,7 @@ export default function Signup(props: any){
    onAuthStateChanged( auth, (user) => {
         if(user){
             // user is authenticated
-            // redirect user to home
+            // redirect user to homet
             router.replace('/login')
         }
         else{
