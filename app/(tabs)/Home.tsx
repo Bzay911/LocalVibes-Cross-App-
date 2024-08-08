@@ -33,7 +33,7 @@ export default function Main(props: any){
             </View>
 
         <UpcomingEvents />
-        <UpcomingEvents />
+    
 
         <Text style={styles.mainTexts}>Suggested Organisers</Text>
 

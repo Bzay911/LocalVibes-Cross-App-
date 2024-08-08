@@ -1,62 +1,102 @@
-import {Text, View, StyleSheet, Pressable} from 'react-native'
-import {Image} from 'expo-image'
+import React, { useContext, useState, useEffect } from "react";
+import { View, Text, StyleSheet, FlatList } from "react-native";
+import { collection, query, onSnapshot } from "firebase/firestore";
+import { DbContext } from "@/contexts/DbContext";
 
-export default function UpcomingEvents(props: any){
-   
+export default function Events(props: any) {
+  const db = useContext(DbContext);
 
-    return(
-        <View style = {styles.container}>
-            <Image 
-            style ={styles.image}
-            source={"https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"}
-            contentFit="cover"
-            />
+  const [events, setEvents] = useState([]);
+  const [loaded, setLoaded] = useState(false);
 
-         <View style = {styles.textContainer}>
-             <Text style={styles.mainText}>The Elements and Rock Revival</Text>
-             <Text style={styles.middleText}>Townhall, Sydney</Text>
-             <Text style={styles.lastText}>Happening on 26th August, 2024</Text>
-        </View>
-        </View>
-    )
+  useEffect(() => {
+    if (!loaded) {
+      fetchData();
+      setLoaded(true);
+    }
+  }, [loaded]);
+
+  const fetchData = () => {
+    const q = query(collection(db, "events"));
+    const unsub = onSnapshot(q, (querySnapshot) => {
+      let items: any = [];
+      querySnapshot.forEach((doc) => {
+        let item = doc.data();
+        item.id = doc.id;
+        items.push(item);
+      });
+      setEvents(items);
+    });
+
+    return () => unsub();
+  };
+
+  type ItemProps = {
+    eventTitle: string;
+    eventVenue: string;
+    eventDate: string;
+  };
+
+  const RenderItem = ({ eventTitle, eventVenue, eventDate }: ItemProps) => (
+    <View style={styles.itemContainer}>
+      <Text style={styles.eventTitle}>{eventTitle}</Text>
+      <Text style={styles.eventVenue}>{eventVenue}</Text>
+      <Text style={styles.eventDate}>{eventDate}</Text>
+    </View>
+  );
+
+  return (
+    <View style={styles.container}>
+      <FlatList
+        data={events}
+        renderItem={({ item }) => (
+          <RenderItem
+            eventTitle={item.eventTitle}
+            eventVenue={item.eventVenue}
+            eventDate={item.eventDate}
+          />
+        )}
+        keyExtractor={(item) => item.id}
+      />
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        padding: 10,
-      },
-      image: {
-        width: 100,  
-        height: 100, 
-        marginRight: 10,
-        borderRadius:5,
-        borderColor: "#FFFFFF",
-        borderWidth: 1
-      },
-      textContainer: {
-        flexDirection: 'column',
-        justifyContent: 'center',
-        backgroundColor: "#301A25",
-        padding: 13,
-        borderRadius: 7
-      },
-      mainText: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        marginBottom: 5,
-        color: "#FFFFFF"
-      },
-      middleText: {
-        fontSize: 16,
-        marginBottom: 5,
-        color: "#FFFFFF"
-      },
-      lastText: {
-        fontSize: 14,
-        color: "#FFFFFF"
-      },
-    
-    
-})
+  container: {
+    backgroundColor: "#050608",
+    flex: 1,
+    padding: 16,
+  },
+  header: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 16,
+  },
+  itemContainer: {
+    backgroundColor: "#f9c2ff",
+    padding: 20,
+    marginVertical: 8,
+    marginHorizontal: 16,
+    borderRadius: 8,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.8,
+    shadowRadius: 2,
+    elevation: 1,
+  },
+  eventTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 8,
+  },
+  eventVenue: {
+    fontSize: 16,
+    color: "#555",
+    marginBottom: 4,
+  },
+  eventDate: {
+    fontSize: 14,
+    color: "#999",
+  },
+});
