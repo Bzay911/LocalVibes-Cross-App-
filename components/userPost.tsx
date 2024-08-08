@@ -86,42 +86,38 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#301A25",
     padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
-    borderRadius: 8,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 1,
-    width: '100%', // Ensure container takes up full width of its parent
+    marginVertical: 30,
   },
+
   image: {
-    width: '100%', // Image width will be 100% of its parent container
+    // width: '100%', 
     height: width * 0.7 * 0.75,
-    marginBottom: 12,
-    borderRadius: 5,
-    borderColor: "#FFFFFF",
-    borderWidth: 1,
+    marginBottom: 18,
+    // borderColor: "#FFFFFF",
   },
+
   headContainer: {
     flexDirection: "row",
-    alignItems: 'center',
-    marginBottom: 10, // Add margin to separate from the image
+    gap:15,
+    marginBottom: 20,
   },
+
   textContainer: {
     flexDirection: 'column',
     justifyContent: 'center',
   },
+
   mainText: {
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 5,
     color: "#FFFFFF",
   },
+
   postText: {
     fontSize: 16,
     marginBottom: 5,
     color: "#FFFFFF",
+    textAlign:"justify"
   },
 });

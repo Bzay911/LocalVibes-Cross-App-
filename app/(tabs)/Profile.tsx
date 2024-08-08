@@ -1,4 +1,4 @@
-import { Pressable, View, Text, StyleSheet}from "react-native";
+import { Pressable, View, Text, StyleSheet, ScrollView}from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import UpcomingEvents from "@/components/UpcomingEvents";
 import { useState } from "react";
@@ -44,6 +44,8 @@ export default function Profile(props: any){
     }
 
     return(
+        <ScrollView>
+
         <View style={styles.container}>
 
             <View style={styles.iconContainer}>
@@ -68,7 +70,7 @@ export default function Profile(props: any){
             </View>
 
             <UpcomingEvents />
-            <UpcomingEvents />
+          
 
             <View style={styles.signOut}>
 
@@ -78,6 +80,7 @@ export default function Profile(props: any){
             </View>
 
         </View>
+        </ScrollView>
         
     )
 }

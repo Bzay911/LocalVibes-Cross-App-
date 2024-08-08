@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { View, Text, StyleSheet, FlatList } from "react-native";
+import { View, Text, StyleSheet, FlatList, Image } from "react-native";
 import { collection, query, onSnapshot } from "firebase/firestore";
 import { DbContext } from "@/contexts/DbContext";
 
@@ -15,10 +15,6 @@ export default function Events(props: any) {
       setLoaded(true);
     }
   }, [loaded]);
-
-
-
-
 
   const fetchData = () => {
     const q = query(collection(db, "events"));
@@ -39,13 +35,25 @@ export default function Events(props: any) {
     eventTitle: string;
     eventVenue: string;
     eventDate: string;
+    eventImage: string
   };
 
-  const RenderItem = ({ eventTitle, eventVenue, eventDate }: ItemProps) => (
+  const RenderItem = ({ eventTitle, eventVenue, eventDate, eventImage }: ItemProps) => (
+    <View style={styles.eventContainer}>
+
+    <View>
+      <Image 
+  style ={styles.image}
+  source={{uri: eventImage}}
+  contentFit="cover"
+  />
+    </View>
+
     <View style={styles.itemContainer}>
       <Text style={styles.eventTitle}>{eventTitle}</Text>
       <Text style={styles.eventVenue}>{eventVenue}</Text>
       <Text style={styles.eventDate}>{eventDate}</Text>
+    </View>
     </View>
   );
 
@@ -58,9 +66,11 @@ export default function Events(props: any) {
             eventTitle={item.eventTitle}
             eventVenue={item.eventVenue}
             eventDate={item.eventDate}
+            eventImage={item.eventImage}
           />
         )}
         keyExtractor={(item) => item.id}
+        contentContainerStyle={styles.listContent} 
       />
     </View>
   );
@@ -68,39 +78,47 @@ export default function Events(props: any) {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#050608",
-    flex: 1,
-    padding: 16,
+    flex: 1, 
+    backgroundColor: "#050608", 
   },
-  header: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 16,
+  eventContainer:{
+    flexDirection:"row",
+    alignItems:"center",
   },
+
+  listContent: {
+    paddingVertical: 16, 
+  },
+
   itemContainer: {
-    backgroundColor: "#f9c2ff",
-    padding: 20,
-    marginVertical: 8,
+    backgroundColor: "#301A25",
+    padding: 10,
+    marginVertical: 10,
     marginHorizontal: 16,
     borderRadius: 8,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 1,
+    flex:1
   },
   eventTitle: {
     fontSize: 20,
     fontWeight: "bold",
     marginBottom: 8,
+    color: "white",
   },
   eventVenue: {
     fontSize: 16,
-    color: "#555",
     marginBottom: 4,
+    color: "white",
   },
   eventDate: {
     fontSize: 14,
     color: "#999",
+  },
+  image: {
+    width: 105,  
+    height: 100, 
+    margin: 12,
+    borderRadius:5,
+    borderColor: "#FFFFFF",
+    borderWidth: 1
   },
 });
