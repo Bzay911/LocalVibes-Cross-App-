@@ -6,7 +6,7 @@ import { DbContext } from "@/contexts/DbContext";
 
 export default function Suggestions(){
   const db = useContext(DbContext);
-  const [events, setEvents] = useState([]);
+  const [organisers, setOrganisers] = useState([]);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -26,7 +26,7 @@ const fetchData = () => {
       item.id = doc.id;
       items.push(item);
     });
-    setEvents(items);
+    setOrganisers(items);
   });
 
   return () => unsub();
@@ -42,7 +42,7 @@ const RenderItem = ({ organiserImage, organiserUsername}: ItemProps) => (
   <View style = {styles.itemContainer}>
   <Image 
   style ={styles.image}
-  source={organiserImage}
+  source={{uri:organiserImage}}
   contentFit="cover"
   />
   <Text style = {styles.text}>{organiserUsername}</Text>
@@ -50,9 +50,9 @@ const RenderItem = ({ organiserImage, organiserUsername}: ItemProps) => (
 );
 
     return(
-<View>
+
   <FlatList 
-         data={events}
+         data={organisers}
          horizontal={true}
          renderItem={({item} ) => (
            <RenderItem
@@ -63,8 +63,9 @@ const RenderItem = ({ organiserImage, organiserUsername}: ItemProps) => (
          )}
          keyExtractor={(item) => item.id}
        />  
-</View>
+
     )
+
 }
 
 const styles = StyleSheet.create({

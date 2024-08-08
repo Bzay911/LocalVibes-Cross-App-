@@ -1,6 +1,6 @@
 import {Text, View, StyleSheet, Pressable, Dimensions,ScrollView} from 'react-native'
 import {Image} from 'expo-image'
-import UpcomingEvents from '@/components/upcomingEvents'
+import UpcomingEvents from '@/components/UpcomingEvents'
 import Suggestions from '@/components/Suggestions'
 import { AuthContext } from '@/contexts/AuthContext'
 import { useContext } from 'react'

@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect} from "react";
 import { View, Text, StyleSheet, FlatList, ScrollView } from "react-native";
-import UpcomingEvents from '@/components/upcomingEvents'
+import UpcomingEvents from '@/components/UpcomingEvents'
 
 export default function Events(props: any) {
  

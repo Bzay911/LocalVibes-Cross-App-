@@ -1,5 +1,5 @@
 import { Pressable, View, Text, StyleSheet} from "react-native";
-import UpcomingEvents from '@/components/upcomingEvents'
+import UpcomingEvents from '@/components/UpcomingEvents'
 
 export default function SavedEvents(props: any){
    

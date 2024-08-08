@@ -1,6 +1,6 @@
 import { Pressable, View, Text, StyleSheet}from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
-import UpcomingEvents from "@/components/upcomingEvents";
+import UpcomingEvents from "@/components/UpcomingEvents";
 import { useState } from "react";
 import { AuthContext } from '@/contexts/AuthContext'
 import { useContext, useEffect } from 'react'
