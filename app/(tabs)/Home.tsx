@@ -1,7 +1,7 @@
 import {Text, View, StyleSheet, Pressable, Dimensions,ScrollView} from 'react-native'
 import {Image} from 'expo-image'
 import UpcomingEvents from '@/components/upcomingEvents'
-import Suggestions from '@/components/suggestions'
+import Suggestions from '@/components/Suggestions'
 import { AuthContext } from '@/contexts/AuthContext'
 import { useContext } from 'react'
 
@@ -38,9 +38,10 @@ export default function Main(props: any){
         <Text style={styles.mainTexts}>Suggested Organisers</Text>
 
         <View style={styles.organiserTab}>
-        <Suggestions organiserName="@underground"/>
-        <Suggestions organiserName="@kukuchurro"/>
-        <Suggestions organiserName="@slackers"/>
+          <ScrollView horizontal={true}>
+        <Suggestions />
+               
+         </ScrollView>
         </View>
 
         </View>

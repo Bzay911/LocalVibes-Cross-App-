@@ -16,6 +16,10 @@ export default function Events(props: any) {
     }
   }, [loaded]);
 
+
+
+
+
   const fetchData = () => {
     const q = query(collection(db, "events"));
     const unsub = onSnapshot(q, (querySnapshot) => {
