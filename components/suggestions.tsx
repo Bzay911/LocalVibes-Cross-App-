@@ -3,8 +3,11 @@ import { View, Text, StyleSheet, FlatList,Image } from "react-native";
 import { collection, query, onSnapshot } from "firebase/firestore";
 import { DbContext } from "@/contexts/DbContext";
 
+type SuggestionsProps = {
+  isHorizontal?: boolean;
+};
 
-export default function Suggestions(){
+export default function Suggestions({ isHorizontal = false }: SuggestionsProps){
   const db = useContext(DbContext);
   const [organisers, setOrganisers] = useState([]);
   const [loaded, setLoaded] = useState(false);
@@ -53,7 +56,7 @@ const RenderItem = ({ organiserImage, organiserUsername}: ItemProps) => (
 
   <FlatList 
          data={organisers}
-         horizontal={true}
+         horizontal={isHorizontal}
          renderItem={({item} ) => (
            <RenderItem
            organiserImage={item.organiserImage}
@@ -69,13 +72,8 @@ const RenderItem = ({ organiserImage, organiserUsername}: ItemProps) => (
 }
 
 const styles = StyleSheet.create({
-  container:{
-    flexDirection:'column'
-  },
     itemContainer: {
-        flexDirection: 'column',
-        padding: 5,
-        alignItems:"center"
+        padding: 15,
       },
 
       image: {

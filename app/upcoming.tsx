@@ -7,8 +7,7 @@ export default function SavedEvents(props: any){
     return(
         <View style={styles.container}>
             <UpcomingEvents />
-            <UpcomingEvents />
-            <UpcomingEvents />
+        
         </View>
     )
 }

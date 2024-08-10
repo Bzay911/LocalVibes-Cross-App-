@@ -4,6 +4,7 @@ import UpcomingEvents from '@/components/UpcomingEvents'
 import Suggestions from '@/components/Suggestions'
 import { AuthContext } from '@/contexts/AuthContext'
 import { useContext } from 'react'
+import { Link } from 'expo-router'
 
 const {width} = Dimensions.get('window')
 
@@ -29,17 +30,22 @@ export default function Main(props: any){
 
             <View style={styles.titleAlignment}>
             <Text style={styles.mainTexts}>Upcoming Events</Text>
+            <Link href="/upcoming">
             <Text style={styles.viewText}>view all</Text>
+            </Link>
             </View>
 
         <UpcomingEvents />
     
-
+          <View style={styles.titleAlignmentOrg}>
         <Text style={styles.mainTexts}>Suggested Organisers</Text>
-
+        <Link href="/suggestedOrganisers">
+            <Text style={styles.viewText}>view all</Text>
+            </Link>
+          </View>
         <View style={styles.organiserTab}>
           <ScrollView horizontal={true}>
-        <Suggestions />
+        <Suggestions isHorizontal={true}/>
                
          </ScrollView>
         </View>
@@ -85,7 +91,12 @@ const styles = StyleSheet.create({
       titleAlignment:{
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 198
+        gap: 190
+      },
+      titleAlignmentOrg:{
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 150
       },
       organiserTab:{
         flexDirection: "row",
