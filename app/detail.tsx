@@ -6,6 +6,7 @@ import { doc, getDoc, deleteDoc } from 'firebase/firestore'
 import { AuthContext } from '@/contexts/AuthContext'
 import { Ionicons } from "@expo/vector-icons";
 
+
 const {width} = Dimensions.get('window')
 export default function ItemDetail (props: any){
     const db = useContext(DbContext)
@@ -150,7 +151,7 @@ const styles = StyleSheet.create({
       icons:{
         flexDirection:"row",
         justifyContent:"flex-end",
-        padding:10,
+        padding:17,
         gap:5
       }
     

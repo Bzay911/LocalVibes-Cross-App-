@@ -1,12 +1,17 @@
 import { FontAwesome } from '@expo/vector-icons';
 import React, { useContext, useState, useEffect } from "react";
-import { View, Text, StyleSheet, FlatList,Image, Dimensions } from "react-native";
+import { View, Text, StyleSheet, FlatList,Image, Dimensions, Pressable} from "react-native";
 import { collection, query, onSnapshot } from "firebase/firestore";
 import { DbContext } from "@/contexts/DbContext";
+import { Ionicons } from '@expo/vector-icons';
+import { doc, deleteDoc } from 'firebase/firestore'
+import { useNavigation } from 'expo-router';
+
 
 const {width} = Dimensions.get('window')
 export default function UserPost() {
   const db = useContext(DbContext);
+  const navigation = useNavigation()
   const [posts, setPosts] = useState([]);
   const [loaded, setLoaded] = useState(false);
 
@@ -34,13 +39,20 @@ const fetchData = () => {
 };
 
 type ItemProps = {
+  id:string
   postDetails: string;
   postImage: string;
   posterAddress: string;
   posterFullName: string;
 };
 
-const RenderItem = ({ postDetails, postImage, posterAddress, posterFullName}: ItemProps) => (
+const deleteDocument = async (documentId: string) =>{
+  const docRef = doc(db, `community`, documentId)
+  await deleteDoc(docRef)
+  // navigation.goBack()
+}
+
+const RenderItem = ({ id, postDetails, postImage, posterAddress, posterFullName}: ItemProps) => (
   <View style={styles.container}>
 
   <View style={styles.headContainer}>
@@ -49,6 +61,17 @@ const RenderItem = ({ postDetails, postImage, posterAddress, posterFullName}: It
   <Text style={styles.mainText}>{posterFullName}</Text>
   <Text style={styles.postText}>{posterAddress}</Text>
   </View>
+
+  <View style={styles.icons}>
+<Pressable>
+<Ionicons name="create-outline" size={30} color="white"></Ionicons>
+</Pressable>
+
+<Pressable onPress={() => deleteDocument(id)}>
+<Ionicons name="trash-outline" size={30} color="red"></Ionicons>
+</Pressable>
+</View>
+
   </View>
 
 <View> 
@@ -70,6 +93,7 @@ const RenderItem = ({ postDetails, postImage, posterAddress, posterFullName}: It
     data={posts}
     renderItem={({item} ) => (
       <RenderItem
+      id={item.id}
       postImage={item.postImage}
       postDetails={item.postDetails}
       posterFullName={item.posterFullName}
@@ -98,7 +122,7 @@ const styles = StyleSheet.create({
 
   headContainer: {
     flexDirection: "row",
-    gap:15,
+    gap:20,
     marginBottom: 20,
   },
 
@@ -120,4 +144,12 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     textAlign:"justify"
   },
+  icons:{
+    flexDirection:"row",
+    position:"absolute",
+    padding:10,
+    gap:8,
+    right:1,
+    top:0
+  }
 });
