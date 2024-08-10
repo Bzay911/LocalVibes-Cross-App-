@@ -1,4 +1,4 @@
-import { Pressable, View, Text, StyleSheet, Modal,TextInput, ScrollView}from "react-native";
+import {Image, Pressable, View, Text, StyleSheet, Modal,TextInput, ScrollView}from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import UpcomingEvents from "@/components/UpcomingEvents";
 import { useState } from "react";
@@ -8,7 +8,7 @@ import {signOut} from '@firebase/auth'
 import { useRouter, Link } from 'expo-router'
 import { Ionicons } from "@expo/vector-icons";
 import { DbContext } from "@/contexts/DbContext";
-import { addDoc, collection } from 'firebase/firestore';
+import { updateDoc, doc, getDoc, onSnapshot } from 'firebase/firestore';
 
 export default function Profile(props: any){
 
@@ -22,12 +22,7 @@ export default function Profile(props: any){
     const[address, setAddress] = useState('')
     const[firstName, setFirstName] = useState('')
     const[lastName, setLastName] = useState('')
-
-    useEffect(() => {
-        if (auth){
-            console.log(auth.currentUser)
-        }
-    })
+    const[userEmail, setUserEmail] = useState('')
 
     const SignOutUser = () => {
         signOut( auth )
@@ -58,6 +53,7 @@ export default function Profile(props: any){
       setLastName('')
     },[modalVisible])
   
+    // Updating user details 
     const addData = async () => {
       const data = {
         userImage: image,
@@ -65,30 +61,55 @@ export default function Profile(props: any){
         userLastName: lastName,
         userAddress: address
       }
-      const docRef = await addDoc(collection(db, "users"), data)
+      const userDocRef = doc(db, "users", auth.currentUser.uid);
+      await updateDoc(userDocRef, data);
     }
+
+    // Fetching user profile details
+    useEffect(() => {
+        if (auth.currentUser) {
+            const userDocRef = doc(db, "users", auth.currentUser.uid)
+            const unsubscribe = onSnapshot(userDocRef, (doc) => {
+                if (doc.exists()) {
+                    const data = doc.data()
+                    setAddress(data.userAddress)
+                    setImage(data.userImage)
+                    setFirstName(data.userFirstName)
+                    setLastName(data.userLastName)
+                    setUserEmail(data.userEmail)
+                }
+            });
+            return () => unsubscribe()
+        }
+    }, [auth, db]);
+
 
     return(
         <ScrollView>
 
         <View style={styles.container}>
 
+        {/* Add button */}
         <Pressable 
       style={styles.plusBtn}
-      onPress={() => setModalVisible(true)}
-      >
+      onPress={() => setModalVisible(true)}>
         <Text style={styles.plusBtnText}>
           <Ionicons name="add" size={26}></Ionicons>
         </Text>
       </Pressable>
 
-            <View style={styles.iconContainer}>
-           <FontAwesome name="user" size={150} color="white"/>
+            <View style={styles.imageContainer}>
+            <Image 
+            style ={styles.image}
+            source={{uri:image || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'}}
+            contentFit="cover"
+            />
             </View>
             
             <View style={styles.textContainer}>
-            <Text style={styles.mainText}>{firstName}</Text>
-            <Text style={styles.subText}>doejohn32@gmail.com</Text>
+            <Text style={styles.mainText}>{firstName + " " +lastName}</Text>
+            <Text style={styles.subText}>{userEmail}</Text>
+            <Text style={styles.subText}>{address}</Text>
             </View>
 
             <View style={styles.tabContainer}>
@@ -153,7 +174,7 @@ export default function Profile(props: any){
               setModalVisible(false)
             }
               }>
-              <Text style={styles.addPostBtnText}>Save Profile</Text>
+              <Text style={styles.addPostBtnText}>Update Profile</Text>
             </Pressable>
           </View>
 
@@ -278,6 +299,17 @@ const styles = StyleSheet.create({
     inputHeadertxt:{
       marginBottom: 10,
     },
-    
+    imageContainer:{
+        alignItems:"center",
+        marginTop:35
+    },
+    image: {
+        width: 150,  
+        height: 150, 
+        marginRight: 10,
+        borderRadius:80,
+        borderColor: "#FFFFFF",
+        borderWidth: 1
+      },
 
 })

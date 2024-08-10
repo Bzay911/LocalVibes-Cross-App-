@@ -2,8 +2,9 @@ import {FlatList, Dimensions, StyleSheet, Pressable, View, Image, Text} from 're
 import { useNavigation, useLocalSearchParams } from 'expo-router'
 import { useEffect, useState, useContext } from 'react'
 import { DbContext } from '@/contexts/DbContext'
-import { doc, getDoc } from 'firebase/firestore'
+import { doc, getDoc, deleteDoc } from 'firebase/firestore'
 import { AuthContext } from '@/contexts/AuthContext'
+import { Ionicons } from "@expo/vector-icons";
 
 const {width} = Dimensions.get('window')
 export default function ItemDetail (props: any){
@@ -39,8 +40,28 @@ export default function ItemDetail (props: any){
         setEvents(items)
     }
 
+    const deleteDocument = async (documentId: string) =>{
+      const docRef = doc(db, `events`, id)
+      await deleteDoc(docRef)
+      navigation.goBack()
+    }
+
     const RenderItem = ({ id, eventTitle, eventVenue, eventDate, eventImage }: ItemProps) => (
         <View style={styles.container}>
+
+          <View style={styles.icons}>
+
+            <Pressable>
+          <Ionicons name="create-outline" size={30} color="white"></Ionicons>
+            </Pressable>
+
+            <Pressable onPress={() => deleteDocument(id)}>
+          <Ionicons name="trash-outline" size={30} color="red"></Ionicons>
+            </Pressable>
+
+          </View>
+       
+
        <Image
           style={styles.image}
           source={{ uri: eventImage }}
@@ -81,7 +102,8 @@ export default function ItemDetail (props: any){
 const styles = StyleSheet.create({
     container:{
         backgroundColor:"#050608",
-        flex:1
+        flex:1,
+        height:800
     },
     textContainer:{
         padding:12,
@@ -124,6 +146,12 @@ const styles = StyleSheet.create({
         color:"white",
         fontWeight:"bold",
         fontSize:18
+      }, 
+      icons:{
+        flexDirection:"row",
+        justifyContent:"flex-end",
+        padding:10,
+        gap:5
       }
     
 })

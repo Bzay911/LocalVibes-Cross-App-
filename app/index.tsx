@@ -5,28 +5,40 @@ import { useContext } from 'react'
 import { AuthContext } from '@/contexts/AuthContext'
 import{createUserWithEmailAndPassword, onAuthStateChanged} from '@firebase/auth'
 import { useRouter} from 'expo-router'
+import { getFirestore, doc, setDoc } from 'firebase/firestore'
 
 export default function Signup(props: any){
     const auth = useContext(AuthContext)
     const router = useRouter()
+    const firestore = getFirestore()
 
-    const createAccount = (email: string, password: string) => {
-        createUserWithEmailAndPassword( auth, email, password)
-        .then((userCredential) => {
-            // console.log(userCredential.user)
-            router.replace("/login")
-        })
-        .catch((error) => {
-            console.log(error.code, error.message)
-        })
+    const createAccount = async (email: string, password: string) => {
+        try {
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredential.user;
 
-    }
+            // Add the user to Firestore with their UID as the document ID
+            await setDoc(doc(firestore, "users", user.uid), {
+                userEmail: user.email,
+                userFirstName: "",
+                userLastName: "",
+                userAddress: "",
+                userImage: ""
+               
+            });
+
+            // Redirect to login
+            router.replace("/Home");
+        } catch (error: any) {
+            console.log(error.code, error.message);
+        }
+    };
 
    onAuthStateChanged( auth, (user) => {
         if(user){
             // user is authenticated
             // redirect user to homet
-            router.replace('/login')
+            router.replace('/Home')
         }
         else{
             // user is not authenticated
@@ -41,8 +53,7 @@ export default function Signup(props: any){
                 <Link href="/login">
                 <Text style={styles.link}>Go to Login</Text>
                 </Link>
-            </View>
-           
+            </View> 
         </View>
     )
 }
