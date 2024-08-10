@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
         justifyContent:"center",
         backgroundColor: "#FF64A5",
         padding:15,
-        marginTop:20,
+        margin:20,
         borderRadius:7
       },
       signOutTxt: {
