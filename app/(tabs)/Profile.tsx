@@ -1,4 +1,4 @@
-import { Pressable, View, Text, StyleSheet, ScrollView}from "react-native";
+import { Pressable, View, Text, StyleSheet, Modal,TextInput, ScrollView}from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import UpcomingEvents from "@/components/UpcomingEvents";
 import { useState } from "react";
@@ -6,14 +6,22 @@ import { AuthContext } from '@/contexts/AuthContext'
 import { useContext, useEffect } from 'react'
 import {signOut} from '@firebase/auth'
 import { useRouter, Link } from 'expo-router'
+import { Ionicons } from "@expo/vector-icons";
+import { DbContext } from "@/contexts/DbContext";
+import { addDoc, collection } from 'firebase/firestore';
 
 export default function Profile(props: any){
 
+    const db = useContext(DbContext)
     const auth = useContext(AuthContext)
     const router = useRouter()
-
     const [showTickets, setShowTickets] = useState(false)
     const [showFollowing, setShowFollowing] = useState(false)
+    const[modalVisible, setModalVisible] = useState(false)
+    const[image, setImage] = useState('') // implement image when creating user table
+    const[address, setAddress] = useState('')
+    const[firstName, setFirstName] = useState('')
+    const[lastName, setLastName] = useState('')
 
     useEffect(() => {
         if (auth){
@@ -43,17 +51,43 @@ export default function Profile(props: any){
         setShowFollowing(true)
     }
 
+    useEffect(() => {
+      setAddress('')
+      setImage('')
+      setFirstName('')
+      setLastName('')
+    },[modalVisible])
+  
+    const addData = async () => {
+      const data = {
+        userImage: image,
+        userFirstName: firstName,
+        userLastName: lastName,
+        userAddress: address
+      }
+      const docRef = await addDoc(collection(db, "users"), data)
+    }
+
     return(
         <ScrollView>
 
         <View style={styles.container}>
+
+        <Pressable 
+      style={styles.plusBtn}
+      onPress={() => setModalVisible(true)}
+      >
+        <Text style={styles.plusBtnText}>
+          <Ionicons name="add" size={26}></Ionicons>
+        </Text>
+      </Pressable>
 
             <View style={styles.iconContainer}>
            <FontAwesome name="user" size={150} color="white"/>
             </View>
             
             <View style={styles.textContainer}>
-            <Text style={styles.mainText}>John Doe</Text>
+            <Text style={styles.mainText}>{firstName}</Text>
             <Text style={styles.subText}>doejohn32@gmail.com</Text>
             </View>
 
@@ -78,6 +112,57 @@ export default function Profile(props: any){
                 <Text style={styles.signOutTxt}>Sign Out</Text>
             </Pressable>
             </View>
+
+            <Modal
+      animationType="fade"
+      transparent={false}
+      visible={modalVisible}
+      >
+        <View style={styles.modal}>
+
+          <View style={styles.modalContainer}>
+          <Text style={styles.modalText}>Set up your user details</Text>
+          <Text style={styles.inputHeadertxt}>Profile picture</Text>
+          <TextInput 
+          value={image} 
+          onChangeText={(val) => setImage(val)}
+          style={styles.input}
+          />
+          <Text style={styles.inputHeadertxt}>First name</Text>
+          <TextInput 
+          value={firstName} 
+          onChangeText={(val) => setFirstName(val)}
+          style={styles.input}
+          />
+          <Text style={styles.inputHeadertxt}>Last name</Text>
+          <TextInput 
+          value={lastName} 
+          onChangeText={(val) => setLastName(val)}
+          style={styles.input}
+          />
+          <Text style={styles.inputHeadertxt}>Address</Text>
+          <TextInput 
+          value={address} 
+          onChangeText={(val) => setAddress(val)}
+          style={styles.input}
+          />
+            <Pressable 
+            style={styles.addPostBtn} 
+            onPress={() => {
+              addData()
+              setModalVisible(false)
+            }
+              }>
+              <Text style={styles.addPostBtnText}>Save Profile</Text>
+            </Pressable>
+          </View>
+
+          <Pressable style={styles.modalClose} onPress={() => setModalVisible(false)}>
+            <Text style={styles.modalText}>Close</Text>
+          </Pressable>
+
+        </View>
+      </Modal>
 
         </View>
         </ScrollView>
@@ -133,7 +218,66 @@ const styles = StyleSheet.create({
         color:"#FFFFFF",
         fontWeight:"bold",
         fontSize:18
-      }
+      },
+      plusBtn:{
+        backgroundColor: "#D6578C",
+        borderRadius: 7,
+        padding:15,
+        width:60,
+        height:60,
+        position:"absolute",
+        justifyContent:"center",
+        alignItems:"center",
+        right:20,
+        top:20, 
+        zIndex:999,
+      },
+      plusBtnText:{
+        color:"white",
+        fontSize:20
+      },
+      modal:{
+        padding:20,
+        // backgroundColor:"#050608",
+        flex:1
+      },
+      modalText:{
+        // color:"white"
+      },
+      modalClose:{
+        position:"absolute",
+        right:20,
+        top:20
+      },
+      modalContainer:{
+        // color:"white", 
+        flex:1,
+        marginVertical:50
+      },
+      addPostBtn:{
+        backgroundColor: "#D6578C",
+        borderRadius: 7,
+        padding:15,
+        width:"50%",
+        alignItems:"center",
+        alignSelf:"center"
+      },
+      addPostBtnText:{
+        color:"white",
+        fontSize:20
+      },
+      input: {
+        borderStyle: "solid",
+        borderWidth: 1,
+        borderColor: "#cccccc",
+        padding: 6,
+        marginBottom: 20,
+        backgroundColor: "#efefef",
+        borderRadius: 6,
+    },
+    inputHeadertxt:{
+      marginBottom: 10,
+    },
     
 
 })
