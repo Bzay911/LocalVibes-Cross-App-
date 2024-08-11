@@ -13,7 +13,6 @@ export default function Main(props: any){
   // console.log(auth.uid)
     return(
       <ScrollView contentContainerStyle = {styles.scrollContainer}>
-
       
         <View style={styles.container}>
             <Text style={styles.welcomeText}>Hi John,</Text>
