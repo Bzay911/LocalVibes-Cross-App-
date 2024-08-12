@@ -24,7 +24,7 @@ export default function Main(props: any){
 
             <Image 
             style ={styles.image}
-            source={"https://images.pexels.com/photos/1105666/pexels-photo-1105666.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"}
+            source={"https://images.pexels.com/photos/2263436/pexels-photo-2263436.jpeg?auto=compress&cs=tinysrgb&w=800"}
             contentFit="cover"/>
 
             <View style={styles.titleAlignment}>

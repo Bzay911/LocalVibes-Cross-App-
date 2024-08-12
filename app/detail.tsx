@@ -15,7 +15,6 @@ export default function ItemDetail (props: any){
     const navigation = useNavigation()
     const params = useLocalSearchParams() // For receiveing data from upcomingEvents page
     const {id} = params
-  console.log(params)
 
 
     const[image, setImage] = useState('')
@@ -63,15 +62,9 @@ export default function ItemDetail (props: any){
       const userDocRef = doc(db, "events",id)
       await updateDoc(userDocRef, data);
 
-      setEvents((prevEvents: any) =>
-        prevEvents.map((event) =>
-            event.id === id ? { ...event, ...data } : event
-        )
-    );
-    
+      setEvents({ ...event, ...data });
     setModalVisible(false);
     }
-
 
 
     return(
