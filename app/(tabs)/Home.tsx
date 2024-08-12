@@ -3,19 +3,40 @@ import {Image} from 'expo-image'
 import UpcomingEvents from '@/components/UpcomingEvents'
 import Suggestions from '@/components/Suggestions'
 import { AuthContext } from '@/contexts/AuthContext'
-import { useContext } from 'react'
+import { useContext, useState , useEffect} from 'react'
 import { Link } from 'expo-router'
+import { DbContext } from '@/contexts/DbContext'
+import { doc, getDoc } from 'firebase/firestore';
+
 
 const {width} = Dimensions.get('window')
 
 export default function Main(props: any){
   const auth = useContext( AuthContext )
-  // console.log(auth.uid)
+  const db = useContext(DbContext);
+  const [firstName, setFirstName] = useState("");
+
+  useEffect(() => {
+    const fetchUserDetails = async () => {
+      if (auth?.currentUser) {
+        const userDocRef = doc(db, "users", auth.currentUser.uid);
+        const userDoc = await getDoc(userDocRef);
+        
+        if (userDoc.exists()) {
+          const userData = userDoc.data();
+          setFirstName(userData.userFirstName || "guest");
+        }
+      }
+    };
+
+    fetchUserDetails();
+  }, [auth, db]);
+
     return(
       <ScrollView contentContainerStyle = {styles.scrollContainer}>
       
         <View style={styles.container}>
-            <Text style={styles.welcomeText}>Hi John,</Text>
+            <Text style={styles.welcomeText}>Welcome {firstName},</Text>
 
             <View style={styles.titleAlignment}>
             <Text style={styles.mainTexts}>Featured Events</Text>
