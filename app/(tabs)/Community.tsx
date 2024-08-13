@@ -33,7 +33,7 @@ export default function Community() {
 
 
   return (
-    <ScrollView style={styles.scrollContainer}>
+    // <ScrollView style={styles.scrollContainer}>
     <View style={styles.container}>
 
       <Pressable 
@@ -97,7 +97,7 @@ export default function Community() {
         </View>
       </Modal>
     </View>
-    </ScrollView>
+    // </ScrollView>
   );
 
 }

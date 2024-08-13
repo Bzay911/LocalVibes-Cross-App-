@@ -30,7 +30,9 @@ export default function RootLayout() {
        {/* <Stack  screenOptions={{headerShown: false}}/>  */}
       <Stack.Screen name="(tabs)" options={{
         headerShown:false,
+        navigationBarHidden:true
       }
+      
       }/>
       {/* <Stack.Screen name="(tabs)" options={{ headerShown: false }} /> */}
     </Stack>
@@ -43,6 +45,6 @@ export default function RootLayout() {
 const styles = StyleSheet.create({
   container:{
     flex:1,
-    paddingTop: StatusBar.currentHeight,
+    // paddingTop: StatusBar.currentHeight,
   }
 })

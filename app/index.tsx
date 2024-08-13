@@ -1,85 +1,94 @@
-import { View, Text, Pressable, StyleSheet, StatusBar,TextInput} from 'react-native'
+import { View, Text, StyleSheet, StatusBar, Dimensions,ScrollView } from 'react-native'
 import { Link } from 'expo-router'
 import { AuthForm } from '@/components/AuthForm'
-import { useContext } from 'react'
+import { signInWithEmailAndPassword } from '@firebase/auth'
 import { AuthContext } from '@/contexts/AuthContext'
-import{createUserWithEmailAndPassword, onAuthStateChanged} from '@firebase/auth'
-import { useRouter} from 'expo-router'
-import { getFirestore, doc, setDoc } from 'firebase/firestore'
+import { useContext, useState } from 'react'
+import { useRouter } from 'expo-router'
+import { ErrorMessage } from '@/components/ErrorMessage'
+import { Image } from 'expo-image'
 
-export default function Signup(props: any){
-    const auth = useContext(AuthContext)
+const win = Dimensions.get('window')
+const ratio = win.width/541; //541 is actual image width
+
+export default function Login(props: any){
+    const auth = useContext( AuthContext )
     const router = useRouter()
-    const firestore = getFirestore()
+    const [error, setError] = useState('')
+    const[isLoggedIn, setIsLoggedIn] = useState(false)
 
-    const createAccount = async (email: string, password: string) => {
-        try {
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            const user = userCredential.user;
 
-            // Add the user to Firestore with their UID as the document ID
-            await setDoc(doc(firestore, "users", user.uid), {
-                userEmail: user.email,
-                userFirstName: "",
-                userLastName: "",
-                userAddress: "",
-                userImage: ""
-               
-            });
-
-            // Redirect to login
-            router.replace("/Home");
-        } catch (error: any) {
-            console.log(error.code, error.message);
-        }
-    };
-
-   onAuthStateChanged( auth, (user) => {
-        if(user){
-            // user is authenticated
-            // redirect user to homet
+    const LogIn = ( email:string, password:string ) => {
+        signInWithEmailAndPassword( auth, email, password )
+        .then((userCredential) => {
+            console.log(userCredential)
             router.replace('/Home')
-        }
-        else{
-            // user is not authenticated
-        }
-   })
+        })
+        .catch(( error) => {
+            setError( error.code )
+        })
+        setIsLoggedIn(true)
+    }
+
+    
 
     return (
-        <View style ={styles.backgroundColor}>
-            <AuthForm title="New to Local Vibes?" semiTitle= "Sign up and enjoy locally" actionText="Sign Up" action={createAccount}/>
-            <View style= {styles.container}>
-                <Text style = {styles.textColor}>Already have an account?</Text>
-                <Link href="/login">
-                <Text style={styles.link}>Go to Login</Text>
+        <ScrollView style = {styles.backgroundColor}>
+
+        <View >
+            <View style={styles.loginView}>
+
+              <Image 
+            style ={styles.image}
+             source={require('../assets/images/loginImage.png')} 
+            contentFit="cover"
+            />
+
+            <AuthForm title="Hello Again!" semiTitle = "Welcome back you've been missed" actionText="Log in" action= {LogIn}/>
+            <View style = {styles.container}>
+            <Text style={styles.textColor}>Don't have an account?</Text>
+                <Link href="signup">
+                <Text style={styles.link}>Go to Sign Up</Text>
                 </Link>
-            </View> 
+            </View>
+            <ErrorMessage error = {error} />
         </View>
+            </View>
+        </ScrollView>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-      flexDirection: 'row',
-      justifyContent: "center",
-      marginVertical: 15,
-      gap:5
+        flexDirection: "row",
+        justifyContent: "center",
+        gap:5
+        // marginVertical: 15
+    }, 
 
-      
+    loginView:{
+
     },
 
     backgroundColor: {
         backgroundColor: "#050608",
-        flex: 1
+        flex:1
     },
 
     textColor:{
         color: "#FFFFFF",
     },
 
-    link:{
+
+    link: {
         color: "#FFFFFF",
-        marginLeft: 15,
-        fontWeight: "bold",
-    }
-  });
+        marginLeft: 5,
+        fontWeight:"bold"
+    },
+    image: {
+        width: win.width,
+        height: 250 * ratio,
+        marginTop:20
+        
+      },
+})

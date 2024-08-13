@@ -62,7 +62,7 @@ export default function ItemDetail (props: any){
       const userDocRef = doc(db, "events",id)
       await updateDoc(userDocRef, data);
 
-      setEvents({ ...event, ...data });
+      setEvents({ ...events, ...data });
     setModalVisible(false);
     }
 

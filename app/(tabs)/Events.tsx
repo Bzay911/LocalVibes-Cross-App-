@@ -32,7 +32,7 @@ export default function Events(props: any) {
   }
 
   return (
-    <ScrollView style={styles.scrollContainer}>
+    // <ScrollView style={styles.scrollContainer}>
     <View style={styles.container}>
 
     <Pressable 
@@ -98,7 +98,7 @@ export default function Events(props: any) {
       </Modal>
 
     </View>
-    </ScrollView>
+    // </ScrollView>
   );
 }
 

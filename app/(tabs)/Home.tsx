@@ -33,7 +33,7 @@ export default function Main(props: any){
   }, [auth, db]);
 
     return(
-      <ScrollView contentContainerStyle = {styles.scrollContainer}>
+      // <ScrollView contentContainerStyle = {styles.scrollContainer}>
       
         <View style={styles.container}>
             <Text style={styles.welcomeText}>Welcome {firstName},</Text>
@@ -64,14 +64,12 @@ export default function Main(props: any){
             </Link>
           </View>
         <View style={styles.organiserTab}>
-          <ScrollView horizontal={true}>
+          {/* <ScrollView horizontal={true}> */}
         <Suggestions isHorizontal={true}/>
                
-         </ScrollView>
         </View>
 
         </View>
-        </ScrollView>
     )
 }
 

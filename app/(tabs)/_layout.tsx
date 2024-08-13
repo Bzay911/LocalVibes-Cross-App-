@@ -2,7 +2,7 @@ import { Tabs } from "expo-router";
 import { FontAwesome } from "@expo/vector-icons";
 
 const TabsLayout = () => {
-    return <Tabs screenOptions={{ tabBarActiveTintColor: "#FF64A5" }}>
+    return <Tabs  screenOptions={{ tabBarActiveTintColor: "#FF64A5"}}>
         <Tabs.Screen name="Home" options={{
             headerShown: false,    
             tabBarIcon: ({ color }) => (

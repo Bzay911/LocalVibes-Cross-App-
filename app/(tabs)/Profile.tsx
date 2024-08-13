@@ -85,7 +85,7 @@ export default function Profile(props: any){
 
 
     return(
-        <ScrollView>
+        // <ScrollView>
 
         <View style={styles.container}>
 
@@ -186,7 +186,7 @@ export default function Profile(props: any){
       </Modal>
 
         </View>
-        </ScrollView>
+        // </ScrollView>
         
     )
 }
