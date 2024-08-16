@@ -14,8 +14,8 @@ export default function SuggestedOrganisers(props: any) {
 
 
   useEffect(() => {
-      setImage('')
-      setUsername('')
+      setImage(''|| 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png')
+      setUsername('@')
   },[modalVisible])
 
   const addData = async () => {
@@ -27,8 +27,8 @@ export default function SuggestedOrganisers(props: any) {
   }
 
   return (
-    <ScrollView style={styles.scrollContainer}>
-    <View style={styles.container}>
+    // <ScrollView style={styles.scrollContainer}>
+    <View style={styles.scrollContainer}>
 
     <Pressable 
       style={styles.plusBtn}
@@ -81,7 +81,7 @@ export default function SuggestedOrganisers(props: any) {
       </Modal>
 
     </View>
-    </ScrollView>
+    // </ScrollView>
   );
 }
 

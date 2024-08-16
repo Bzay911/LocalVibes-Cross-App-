@@ -46,7 +46,7 @@ export default function Events() {
       <View>
         <Image
           style={styles.image}
-          source={{ uri: eventImage }}
+          source={{ uri: eventImage || 'https://www.shutterstock.com/image-illustration/no-picture-available-placeholder-thumbnail-600nw-2179364083.jpg' }}
           contentFit="cover"
         />
       </View>

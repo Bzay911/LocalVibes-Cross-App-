@@ -87,6 +87,7 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         backgroundColor: "#efefef",
         borderRadius: 6,
+        height:50
     },
     button: {
         backgroundColor: "#D6578C",
@@ -96,10 +97,10 @@ const styles = StyleSheet.create({
     buttonText: {
         color: "#efefef",
         textAlign: "center",
-        padding: 8,
+        padding: 15,
         fontSize:20,
         fontWeight: "bold",
-        height: 50,
+        height: 60,
     },
 
     buttonDisabled: {

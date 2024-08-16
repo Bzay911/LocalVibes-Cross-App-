@@ -15,8 +15,6 @@ export default function Profile(props: any){
     const db = useContext(DbContext)
     const auth = useContext(AuthContext)
     const router = useRouter()
-    const [showTickets, setShowTickets] = useState(false)
-    const [showFollowing, setShowFollowing] = useState(false)
     const[modalVisible, setModalVisible] = useState(false)
     const[image, setImage] = useState('') // implement image when creating user table
     const[address, setAddress] = useState('')
@@ -32,18 +30,6 @@ export default function Profile(props: any){
         .catch((error) => {
             console.log(error.code, error.message)
         })
-    }
-   
-    // Function to handle press of show tickets
-    const handleShowTickets = () => {
-        setShowTickets(true)
-        setShowFollowing(false)
-    }
-
-    // Function to handle press of show following
-    const handleShowFollowing = () => {
-        setShowTickets(false)
-        setShowFollowing(true)
     }
 
     useEffect(() => {
@@ -114,11 +100,11 @@ export default function Profile(props: any){
 
             <View style={styles.tabContainer}>
 
-                <Pressable onPress={handleShowTickets}>
+                <Pressable>
                 <Text style={styles.subText}>My Tickets</Text>
                 </Pressable>
 
-                <Pressable onPress={handleShowFollowing}>
+                <Pressable>
                 <Text style={styles.subText}>Following</Text>
                 </Pressable>
 

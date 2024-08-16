@@ -1,4 +1,4 @@
-import {FlatList, Dimensions, StyleSheet, Pressable, View, Image, Text, Modal, TextInput} from 'react-native'
+import {SafeAreaView, Dimensions, StyleSheet, Pressable, View, Image, Text, Modal, TextInput} from 'react-native'
 import { useNavigation, useLocalSearchParams } from 'expo-router'
 import { useEffect, useState, useContext } from 'react'
 import { DbContext } from '@/contexts/DbContext'
@@ -68,7 +68,9 @@ export default function ItemDetail (props: any){
 
 
     return(
-      <>
+    <>
+
+
 
       <View style={styles.container}>
 
@@ -87,7 +89,7 @@ export default function ItemDetail (props: any){
 
        <Image
           style={styles.image}
-          source={{ uri: image}}
+          source={{uri:image || 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'}}
           contentFit="cover"
         />
 
@@ -154,6 +156,7 @@ export default function ItemDetail (props: any){
  
          </View>
          </>
+         
 
     )
 }

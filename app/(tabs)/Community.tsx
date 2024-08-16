@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ScrollView, Modal, Pressable, TextInput } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Modal, Pressable, TextInput, SafeAreaView } from 'react-native';
 import UserPost from '@/components/UserPost';
 import { useState, useContext, useEffect } from 'react';
 import { Ionicons } from '@expo/vector-icons';
@@ -33,7 +33,6 @@ export default function Community() {
 
 
   return (
-    // <ScrollView style={styles.scrollContainer}>
     <View style={styles.container}>
 
       <Pressable 
@@ -97,13 +96,18 @@ export default function Community() {
         </View>
       </Modal>
     </View>
-    // </ScrollView>
   );
 
 }
 
 const styles = StyleSheet.create({
   container:{
+      padding:10,
+      gap:25,
+      backgroundColor:"#050608",
+      flex:1,
+  },
+  safecontainer:{
       padding:10,
       gap:25,
       backgroundColor:"#050608",

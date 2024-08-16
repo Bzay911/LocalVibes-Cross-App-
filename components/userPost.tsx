@@ -104,7 +104,7 @@ const RenderItem = ({ id, postDetails, postImage, posterAddress, posterFullName}
 <View> 
 <Image 
   style ={styles.image}
-  source={{uri: postImage}}
+  source={{uri: postImage || 'https://www.shutterstock.com/image-illustration/no-picture-available-placeholder-thumbnail-600nw-2179364083.jpg'}}
   contentFit="cover"
   />
 </View>
